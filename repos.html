@@ -127,24 +127,11 @@
             )
         }
 
-        function getUser() {
-            $.post(
-                "{{github_card_user_api}}",
-                {user: "{{user}}"},
-                function (response, status) {
-                    var result = templateFunc(useTpl, response.data)
-
-                    $('.github-card-user').html(result);
-                }
-            )
-        }
-
         getRepos();
     });
 
     function templateFunc(str, data) {
         var computed = str.replace(/\${(\w+)}/g, function (match, key) {
-            console.log(match, key)
             return data[key];
         });
         return computed;
@@ -162,20 +149,4 @@
         "            <span class=\"status\"><strong>${stargazers_count}</strong>Stars</span>\n" +
         "        </div>\n" +
         "    </div>";
-
-    var useTpl = "<div class=\"github-card user-card\">\n" +
-        "    <div class=\"header\">\n" +
-        "        <a class=\"avatar\" href=\"https://github.com/lepture\" target=\"_top\">\n" +
-        "            <img src=\"${avatar_url}?v=4&s=48\">\n" +
-        "            <strong>${name}</strong><span>@${login}</span>\n" +
-        "        </a>\n" +
-        "        <a class=\"button\" href=\"${html_url}\" target=\"_top\">Follow</a>\n" +
-        "    </div>\n" +
-        "    <ul class=\"status\">\n" +
-        "        <li><a href=\"${html_url}?tab=repositories\" target=\"_top\"><strong>${public_repos}</strong>Repos</a></li>\n" +
-        "        <li><a href=\"https://gist.github.com/${login}\" target=\"_top\"><strong>${public_gists}</strong>Gists</a></li>\n" +
-        "        <li><a href=\"${followers_url}\" target=\"_top\"><strong>${followers}</strong>Followers</a></li>\n" +
-        "    </ul>\n" +
-        "    <div class=\"footer\"></div>\n" +
-        "</div>";
 </script>

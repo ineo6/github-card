@@ -1,16 +1,18 @@
 <?php
 /**
-Plugin Name: Card for GitHub
-Plugin URI: https://github.com/ineo6/github-card
-Description: GitHub 代码仓库短代码展示，另支持展示用户仓库一览
-Version: 1.0.0
-Author: Neo
-Author URI: http://idayer.com
-**/
+ * Plugin Name: Card for GitHub
+ * Plugin URI: https://github.com/ineo6/github-card
+ * Description: GitHub 代码仓库短代码展示，另支持展示用户仓库一览
+ * Version: 1.0.0
+ * Author: Neo
+ * Author URI: http://idayer.com
+ **/
 
 const WP_GITHUB_CARD_USERAGENT = "Github Card/1.0.0 (WordPress 3.9.0+) neo";
-define('GITHUB_CARD_USER_API', WP_PLUGIN_URL . "/" . dirname(plugin_basename(__FILE__)) . '/api/user.php');
-define('GITHUB_CARD_REPOS_API', WP_PLUGIN_URL . "/" . dirname(plugin_basename(__FILE__)) . '/api/repos.php');
+define('GITHUB_CARD_PLUGIN_DIR', plugin_dir_path(__FILE__));
+
+require_once(GITHUB_CARD_PLUGIN_DIR . 'utils.php');
+require_once(GITHUB_CARD_PLUGIN_DIR . 'api.php');
 
 function wp_github_card_i18n()
 {
@@ -20,47 +22,6 @@ function wp_github_card_i18n()
 function wp_github_card_style()
 {
     wp_enqueue_style("github_card_style", plugins_url("wp-github-card.css", __FILE__));
-}
-
-function github_fetch($url)
-{
-    $token = get_option('wp_github_card_github_token');
-    $ch = curl_init($url);
-
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($ch, CURLOPT_ENCODING, 'gzip,deflate');
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Accept-Encoding: gzip, deflate'));
-    curl_setopt($ch, CURLOPT_USERAGENT, WP_GITHUB_CARD_USERAGENT);
-
-    if ($token) {
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: token ' . $token));
-    }
-
-    $response = curl_exec($ch);
-    curl_close($ch);
-
-    return json_decode($response, true);
-}
-
-function wp_github_card_render($template, $pattern, $data)
-{
-    static $cache = array();
-
-    $string = $$cache[$template];
-
-    if (is_null($string)) {
-        $handle = fopen($template, "r");
-        $string = fread($handle, filesize($template));
-        fclose($handle);
-
-        $cache[$template] = $string;
-    }
-
-    $replacer = function ($matches) use ($data) {
-        return $data[$matches[1]];
-    };
-    return preg_replace_callback($pattern, $replacer, $string);
 }
 
 /**
@@ -74,8 +35,8 @@ function wp_github_card_user($args)
         $user = $args['user'];
 
         $data = array(
-            'github_card_user_api' => GITHUB_CARD_USER_API,
-            'github_card_repos_api' => GITHUB_CARD_REPOS_API,
+            'github_card_user_api' => rest_url('github-card/user'),
+            'github_card_repos_api' => rest_url('github-card/repos'),
             'user' => $user
         );
 
@@ -90,21 +51,6 @@ function wp_github_card_user($args)
     }
 }
 
-function numbericCount($num)
-{
-    if ($num === 1000) {
-        return '1k';
-    }
-
-    if ($num < 1000) {
-        return $num;
-    }
-
-    $num = $num / 1000;
-
-    return round($num, 2) . 'k';
-}
-
 function wp_github_user($user)
 {
     $url = "https://api.github.com/users/" . $user;
@@ -113,9 +59,9 @@ function wp_github_user($user)
     if (array_key_exists("message", $userInfo) || array_key_exists("documentation_url", $userInfo) || $userInfo["private"] == true) {
         return $userInfo;
     } else {
-        $userInfo['followers'] = numbericCount($userInfo['followers']);
-        $userInfo['public_gists'] = numbericCount($userInfo['public_gists']);
-        $userInfo['public_repos'] = numbericCount($userInfo['public_repos']);
+        $userInfo['followers'] = numberic_count($userInfo['followers']);
+        $userInfo['public_gists'] = numberic_count($userInfo['public_gists']);
+        $userInfo['public_repos'] = numberic_count($userInfo['public_repos']);
 
         return $userInfo;
     }
@@ -244,9 +190,10 @@ function wp_github_card_options_page()
     <?php
 }
 
+add_action('admin_init', 'wp_github_card_register_settings');
+add_action('rest_api_init', array('GitHubCard_REST_API', 'init'));
 add_filter("plugins_loaded", "wp_github_card_i18n");
 add_filter("wp_enqueue_scripts", "wp_github_card_style");
-add_action('admin_init', 'wp_github_card_register_settings');
 add_filter('admin_menu', 'wp_github_card_options_menu');
 add_filter('plugin_action_links_' . plugin_basename(plugin_dir_path(__FILE__) . 'wp-github-card.php'), 'wp_github_card_options_link');
 add_shortcode("ghCard", "wp_github_card");

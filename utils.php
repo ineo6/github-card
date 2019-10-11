@@ -1,12 +1,4 @@
 <?php
-/**
- * Plugin Name: Card for GitHub
- * Plugin URI: https://github.com/ineo6/github-card
- * Description: GitHub 代码仓库短代码展示，另支持展示用户仓库一览
- * Version: 1.0.0
- * Author: Neo
- * Author URI: http://idayer.com
- **/
 
 function github_fetch($url)
 {

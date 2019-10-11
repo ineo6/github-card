@@ -50,7 +50,7 @@ function wp_github_card_render($template, $pattern, $data)
     return preg_replace_callback($pattern, $replacer, $string);
 }
 
-function numberic_count($num)
+function wp_github_card_numberic_count($num)
 {
     if ($num === 1000) {
         return '1k';

@@ -59,9 +59,9 @@ function wp_github_user($user)
     if (array_key_exists("message", $userInfo) || array_key_exists("documentation_url", $userInfo) || $userInfo["private"] == true) {
         return $userInfo;
     } else {
-        $userInfo['followers'] = wp_github_card_numberic_count($userInfo['followers']);
-        $userInfo['public_gists'] = wp_github_card_numberic_count($userInfo['public_gists']);
-        $userInfo['public_repos'] = wp_github_card_numberic_count($userInfo['public_repos']);
+        $userInfo['followers'] = wp_github_card_number_count($userInfo['followers']);
+        $userInfo['public_gists'] = wp_github_card_number_count($userInfo['public_gists']);
+        $userInfo['public_repos'] = wp_github_card_number_count($userInfo['public_repos']);
 
         return $userInfo;
     }
@@ -111,8 +111,8 @@ function wp_github_card($atts)
             "default_branch" => $repo["default_branch"],
             "description" => ($description_empty && $homepage_empty) ? __("This repository doesn't have description or homepage.", "repo") : $repo["description"],
             "homepage" => $homepage_empty ? $repo["html_url"] : $repo["homepage"],
-            "stargazers_count" => wp_github_card_numberic_count($repo["stargazers_count"]),
-            "forks" => wp_github_card_numberic_count($repo["forks"]),
+            "stargazers_count" => wp_github_card_number_count($repo["stargazers_count"]),
+            "forks" => wp_github_card_number_count($repo["forks"]),
             "action" => $repo["fork"] ? 'Forked by ' : 'Created by '
         );
     }

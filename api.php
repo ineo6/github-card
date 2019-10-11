@@ -84,9 +84,9 @@ class GitHubCard_REST_API
                         "default_branch" => $item['default_branch'],
                         "description" => ($description_empty && $homepage_empty) ? "This repository doesn't have description or homepage." : $item["description"],
                         "homepage" => $item['homepage'],
-                        "stargazers_count" => wp_github_card_numberic_count($item['stargazers_count']),
-                        "forks" => wp_github_card_numberic_count($item['forks']),
-                        "watchers" => wp_github_card_numberic_count($item['watchers']),
+                        "stargazers_count" => wp_github_card_number_count($item['stargazers_count']),
+                        "forks" => wp_github_card_number_count($item['forks']),
+                        "watchers" => wp_github_card_number_count($item['watchers']),
                         "open_issues" => $item['open_issues'],
                         "language" => $item['language'],
                     );

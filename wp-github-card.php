@@ -3,7 +3,7 @@
  * Plugin Name: Card for GitHub
  * Plugin URI: https://github.com/ineo6/github-card
  * Description: GitHub 仓库卡片，支持短代码、Widget展示，同时提供用户仓库一览接口，让你可以在页面中展示。
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: Neo
  * Author URI: http://idayer.com
  **/

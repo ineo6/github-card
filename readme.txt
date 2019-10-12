@@ -4,7 +4,7 @@ Tags: GitHub,card,code,repo
 Requires at least: 4.0
 Tested up to: 5.2.3
 Requires PHP: 5.6
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -24,20 +24,20 @@ Add [GitHub](https://github.com/) repository card into wordpress.
 
 ### Usage
 
-- ShortCode
+#### 1. ShortCode
 
 ```
 [ghCard owner="ineo6" name="mini-deploy"]
 ```
 
-- Widget
+#### 2. Widget
 
 Go to wordpress admin panel to Appearance > Widget.
 
-- Call function
+#### 3. Call function
 
-```php
-<?php wp_github_card_user(array( "user" => "ineo6" ))?>
+```
+wp_github_card_user(array( "user" => "ineo6" ))
 ```
 
 ## Installation
@@ -59,10 +59,7 @@ Go to wordpress admin panel to Appearance > Widget.
 
 ## Changelog
 
-= 1.0.2 (2019-10-12) =
-* Update readme.
-
-= 1.0.1 (2019-10-12) =
+= 1.0.3 (2019-10-12) =
 * Update readme.
 
 = 1.0.0 (2019-10-01) =

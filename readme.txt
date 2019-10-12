@@ -1,6 +1,6 @@
 === Card For GitHub ===
 Contributors: neo
-Tags: GitHub,card,code
+Tags: GitHub,card,code,repo
 Requires at least: 4.0
 Tested up to: 5.2.3
 Requires PHP: 5.6
@@ -8,15 +8,15 @@ Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Add [GitHub](https://github.com/) repository card into your posts.
+Add [GitHub](https://github.com/) repository card into wordpress.
 
 == Description ==
 
-Add [GitHub](https://github.com/) repository card into your posts.
+Add [GitHub](https://github.com/) repository card into wordpress.
 
 在 WordPress 文章/页面中嵌入 [GitHub](https://github.com/) 仓库卡片。
 
-目前主要两个功能：
+功能：
 
 1. 短代码嵌入仓库卡片
 
@@ -25,6 +25,8 @@ Add [GitHub](https://github.com/) repository card into your posts.
 2. 页面中嵌入用户和仓库卡片一览
 
 `<?php wp_github_card_user(array( 'user' => 'ineo6' ))?>`
+
+3. 提供Widget组件
 
 == Installation ==
 

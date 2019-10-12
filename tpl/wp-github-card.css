@@ -22,6 +22,10 @@
     max-width: 400px;
 }
 
+.github-card.github-card-widget {
+    margin: 0;
+}
+
 .github-card {
     border-radius: 5px;
     padding: 8px 8px 0;
@@ -67,7 +71,7 @@
     background-image: linear-gradient(#fafafa, #eaeaea)
 }
 
-.github-card .button:hover {
+.repo-card.github-card .button:hover, .user-card.github-card .button:hover {
     color: #fff;
     text-decoration: none;
     background-color: #3072b3;
@@ -111,7 +115,6 @@
 }
 
 .user-card ul {
-    text-transform: uppercase;
     font-size: 12px;
     color: #707070;
     list-style-type: none;
@@ -163,7 +166,7 @@
     padding: 3px 0 4px 0
 }
 
-.github-card-short-code .header {
+.github-card-short-code .header, .github-card-widget .header {
     padding: 3px 0 4px 57px;
 }
 
@@ -217,10 +220,26 @@
 .repo-card .status {
     font-size: 10px;
     padding-right: 10px;
-    text-transform: uppercase
 }
 
 .repo-card .status strong {
     font-size: 12px;
     padding-right: 5px
+}
+
+.widget_wp_widget_github_user_card .user-card {
+    margin: 0;
+}
+
+.widget_wp_widget_github_user_card .user-card .status li {
+    padding: 4px 0.8rem;
+}
+
+.widget_wp_widget_github_repo_card .repo-card .header strong {
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.widget_wp_widget_github_repo_card .repo-card .header .repo-action {
+    font-size: 12px;
 }

@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Card for GitHub
  * Plugin URI: https://github.com/ineo6/github-card
- * Description: GitHub 代码仓库短代码展示，另支持展示用户仓库一览
+ * Description: GitHub 仓库卡片，支持短代码、Widget展示，同时提供用户仓库一览接口，让你可以在页面中展示。
  * Version: 1.0.0
  * Author: Neo
  * Author URI: http://idayer.com
@@ -13,15 +13,17 @@ define('GITHUB_CARD_PLUGIN_DIR', plugin_dir_path(__FILE__));
 
 require_once(GITHUB_CARD_PLUGIN_DIR . 'utils.php');
 require_once(GITHUB_CARD_PLUGIN_DIR . 'api.php');
+require_once(GITHUB_CARD_PLUGIN_DIR . 'github-repo-widget.php');
+require_once(GITHUB_CARD_PLUGIN_DIR . 'github-user-widget.php');
 
 function wp_github_card_i18n()
 {
-    load_plugin_textdomain("repo", false, plugin_basename(__DIR__) . "/langs/");
+    load_plugin_textdomain("card", false, plugin_basename(__DIR__) . "/langs/");
 }
 
 function wp_github_card_style()
 {
-    wp_enqueue_style("github_card_style", plugins_url("wp-github-card.css", __FILE__));
+    wp_enqueue_style("github_card_style", plugins_url("tpl/wp-github-card.css", __FILE__));
 }
 
 /**
@@ -42,7 +44,7 @@ function wp_github_card_user($args)
 
         $userInfo = wp_github_user($user);
 
-        $template = plugin_dir_path(__FILE__) . "repos.html";
+        $template = plugin_dir_path(__FILE__) . "tpl/repos.html";
         $pattern = '/{{([a-z_]+)}}/';
 
         echo wp_github_card_render($template, $pattern, array_merge($data, $userInfo));
@@ -57,7 +59,7 @@ function wp_github_user($user)
     $userInfo = github_fetch($url);
 
     if (array_key_exists("message", $userInfo) || array_key_exists("documentation_url", $userInfo) || $userInfo["private"] == true) {
-        return $userInfo;
+        return array();
     } else {
         $userInfo['followers'] = wp_github_card_number_count($userInfo['followers']);
         $userInfo['public_gists'] = wp_github_card_number_count($userInfo['public_gists']);
@@ -65,6 +67,21 @@ function wp_github_user($user)
 
         return $userInfo;
     }
+}
+
+
+function wp_github_user_card($user)
+{
+    if (!isset($user)) {
+        return "";
+    }
+
+    $userInfo = wp_github_user($user);
+
+    $template = plugin_dir_path(__FILE__) . "/tpl/user.html";
+    $pattern = '/{{([a-z_]+)}}/';
+
+    return wp_github_card_render($template, $pattern, $userInfo);
 }
 
 function wp_github_card($atts)
@@ -76,6 +93,7 @@ function wp_github_card($atts)
     } else {
         $atts_owner = $atts["owner"];
         $atts_name = $atts["name"];
+        $atts_class = $atts["class"];
     }
 
     if ($atts_owner == null || $atts_name == null) {
@@ -93,7 +111,7 @@ function wp_github_card($atts)
             "name" => $atts_name,
             "html_url" => "https://github.com/" . $atts_owner . "/" . $atts_name,
             "default_branch" => "-",
-            "description" => __("This repository is not available anymore.", "repo"),
+            "description" => __("This repository is not available anymore.", "card"),
             "homepage" => "https://github.com/" . $atts_owner . "/" . $atts_name,
             "stargazers_count" => "-",
             "forks" => "-",
@@ -109,7 +127,7 @@ function wp_github_card($atts)
             "name" => $repo["name"],
             "html_url" => $repo["html_url"],
             "default_branch" => $repo["default_branch"],
-            "description" => ($description_empty && $homepage_empty) ? __("This repository doesn't have description or homepage.", "repo") : $repo["description"],
+            "description" => ($description_empty && $homepage_empty) ? __("This repository doesn't have description or homepage.", "card") : $repo["description"],
             "homepage" => $homepage_empty ? $repo["html_url"] : $repo["homepage"],
             "stargazers_count" => wp_github_card_number_count($repo["stargazers_count"]),
             "forks" => wp_github_card_number_count($repo["forks"]),
@@ -117,8 +135,14 @@ function wp_github_card($atts)
         );
     }
 
-    $template = plugin_dir_path(__FILE__) . "wp-github-card.html";
+    $template = plugin_dir_path(__FILE__) . "tpl/wp-github-card.html";
     $pattern = '/{{([a-z_]+)}}/';
+
+    $data["class"] = "github-card-short-code";
+
+    if (isset($atts_class)) {
+        $data["class"] = $atts_class;
+    }
 
     return wp_github_card_render($template, $pattern, $data);
 }
@@ -126,14 +150,14 @@ function wp_github_card($atts)
 function wp_github_card_options_link($links)
 {
     $url = add_query_arg(array('page' => 'wp-github-card-options'), admin_url('options-general.php'));
-    $settings_link = '<a href="' . esc_url($url) . '">' . __('Settings', 'repo') . '</a>';
+    $settings_link = '<a href="' . esc_url($url) . '">' . __('Settings', 'card') . '</a>';
     array_unshift($links, $settings_link);
     return $links;
 }
 
 function wp_github_card_options_menu()
 {
-    add_options_page(__('GitHub Card', 'repo'), __('GitHub Card', 'repo'), 'manage_options', 'wp-github-card-options', 'wp_github_card_options_page');
+    add_options_page(__('GitHub Card', 'card'), __('GitHub Card', 'card'), 'manage_options', 'wp-github-card-options', 'wp_github_card_options_page');
 }
 
 function wp_github_card_register_settings()
@@ -146,23 +170,23 @@ function wp_github_card_options_page()
 {
     ?>
     <div class="wrap">
-        <h2><?php _e('GitHub Card options', 'repo') ?></h2>
+        <h2><?php _e('GitHub Card options', 'card') ?></h2>
         <form method="post" action="options.php">
             <?php settings_fields('wp_github_card_options_group'); ?>
             <div id="wp_github_card_options_github_auth">
-                <h3><?php _e('Get authenticated to GitHub API (HIGHLY RECOMMENDED!)', 'repo') ?></h3>
-                <p class="description"><?php _e("For unauthenticated requests, the rate limit allows for up to <b>60</b> requests per hour. For authenticated requests, the rate limit is <b>5,000</b> times per hour. If your card works bad, it's possible that unauthenticated request quota is used up.", 'repo') ?></p>
+                <h3><?php _e('Get authenticated to GitHub API (HIGHLY RECOMMENDED!)', 'card') ?></h3>
+                <p class="description"><?php _e("For unauthenticated requests, the rate limit allows for up to <b>60</b> requests per hour. For authenticated requests, the rate limit is <b>5,000</b> times per hour. If your card works bad, it's possible that unauthenticated request quota is used up.", 'card') ?></p>
                 <table class="form-table">
                     <tr>
                         <th scope="row">
-                            <label for="wp_github_card_github_token"><?php _e('Personal Access Token', 'repo') ?></label>
+                            <label for="wp_github_card_github_token"><?php _e('Personal Access Token', 'card') ?></label>
                         </th>
                         <td>
                             <input type="password" name="wp_github_card_github_token" id="wp_github_card_github_token"
                                    class="regular-text"
                                    value="<?php echo get_option('wp_github_card_github_token'); ?>">
                             <button type="button" id="wp_github_card_github_token_toggler"
-                                    class="button button-secondary hidden"><?php _e('Show', 'repo') ?></button>
+                                    class="button button-secondary hidden"><?php _e('Show', 'card') ?></button>
                         </td>
                     </tr>
                 </table>
@@ -174,7 +198,7 @@ function wp_github_card_options_page()
                         button.addEventListener('click', function (e) {
                             isHidden = !isHidden;
                             token.type = isHidden ? 'password' : 'text';
-                            button.innerHTML = isHidden ? "<?php _e('Show', 'repo') ?>" : "<?php _e('Hide', 'repo') ?>";
+                            button.innerHTML = isHidden ? "<?php _e('Show', 'card') ?>" : "<?php _e('Hide', 'card') ?>";
                         }, false);
                         button.classList.remove('hidden');
                     }();
@@ -182,8 +206,8 @@ function wp_github_card_options_page()
             </div>
             <?php submit_button(); ?>
         </form>
-        <h3><?php _e('How do I get the personal access token?', 'repo') ?></h3>
-        <p><?php _e('Visit <strong><a href="https://github.com/settings/tokens/new" target="_blank">https://github.com/settings/tokens/new</a></strong>, make sure <strong>public_repo</strong> is checked (it is the only scope requested by GitHub Card, you may uncheck others) and generate a token.', 'repo') ?></p>
+        <h3><?php _e('How do I get the personal access token?', 'card') ?></h3>
+        <p><?php _e('Visit <strong><a href="https://github.com/settings/tokens/new" target="_blank">https://github.com/settings/tokens/new</a></strong>, make sure <strong>public_repo</strong> is checked (it is the only scope requested by GitHub Card, you may uncheck others) and generate a token.', 'card') ?></p>
         <p><img src="<?php echo plugins_url("screenshot-2.png", __FILE__); ?>" alt="GitHub Personal Access Token"
                 style="box-shadow:0 0 15px lightgray"></p>
     </div>

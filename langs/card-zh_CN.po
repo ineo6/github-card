@@ -1,0 +1,118 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: card-for-github\n"
+"POT-Creation-Date: 2019-10-12 10:34+0800\n"
+"PO-Revision-Date: 2019-10-12 10:35+0800\n"
+"Last-Translator: Neo <arkslove@gmail.com>\n"
+"Language-Team: neo <idayer.com>\n"
+"Language: zh\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.7\n"
+"X-Poedit-KeywordsList: _e;__;esc_html_e\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: github-repo-widget.php:14
+msgid "GitHub Repo"
+msgstr "GitHub 仓库"
+
+#: github-repo-widget.php:15
+msgid "GitHub Repo Card"
+msgstr "GitHub Repo Card"
+
+#: github-repo-widget.php:72 github-user-widget.php:72
+msgid "GitHub"
+msgstr "GitHub"
+
+#: github-repo-widget.php:80 github-user-widget.php:79
+msgid "Title:"
+msgstr "标题："
+
+#: github-repo-widget.php:87 github-user-widget.php:86
+msgid "UserName:"
+msgstr "用户名："
+
+#: github-repo-widget.php:94
+msgid "Repository:"
+msgstr "仓库："
+
+#: github-repo-widget.php:114
+msgid "Repository"
+msgstr "仓库"
+
+#: github-user-widget.php:14
+msgid "GitHub User"
+msgstr "GitHub 用户"
+
+#: github-user-widget.php:15
+msgid "GitHub User Card"
+msgstr "GitHub User Card"
+
+#: github-user-widget.php:105
+msgid "User"
+msgstr "用户"
+
+#: wp-github-card.php:114
+msgid "This repository is not available anymore."
+msgstr "这个仓库不存在或已被移除。"
+
+#: wp-github-card.php:130
+msgid "This repository doesn't have description or homepage."
+msgstr "这个仓库没有描述或主页。"
+
+#: wp-github-card.php:153
+msgid "Settings"
+msgstr "设置"
+
+#: wp-github-card.php:160
+msgid "GitHub Card"
+msgstr "GitHub Card"
+
+#: wp-github-card.php:173
+msgid "GitHub Card options"
+msgstr "GitHub Card 配置"
+
+#: wp-github-card.php:177
+msgid "Get authenticated to GitHub API (HIGHLY RECOMMENDED!)"
+msgstr "获得 GitHub API 访问认证（建议！）"
+
+#: wp-github-card.php:178
+msgid ""
+"For unauthenticated requests, the rate limit allows for up to <b>60</b> "
+"requests per hour. For authenticated requests, the rate limit is <b>5,000</"
+"b> times per hour. If your card works bad, it's possible that "
+"unauthenticated request quota is used up."
+msgstr ""
+"未认证请求的限额为每小时 60 次。认证后该限额将提升至每小时 5000 次。如果发"
+"现自己卡片未能显示，很可能是因为用光了未认证请求的限额。"
+
+#: wp-github-card.php:182
+msgid "Personal Access Token"
+msgstr "个人访问令牌"
+
+#: wp-github-card.php:189 wp-github-card.php:201
+msgid "Show"
+msgstr "显示"
+
+#: wp-github-card.php:201
+msgid "Hide"
+msgstr "隐藏"
+
+#: wp-github-card.php:209
+msgid "How do I get the personal access token?"
+msgstr "如何获取个人访问令牌？"
+
+#: wp-github-card.php:210
+msgid ""
+"Visit <strong><a href=\"https://github.com/settings/tokens/new\" target="
+"\"_blank\">https://github.com/settings/tokens/new</a></strong>, make sure "
+"<strong>public_repo</strong> is checked (it is the only scope requested by "
+"GitHub Card, you may uncheck others) and generate a token."
+msgstr ""
+"访问 <strong><a href=\"https://github.com/settings/tokens/new\" target="
+"\"_blank\">https://github.com/settings/tokens/new</a></strong>，确保选中了 "
+"<strong>public_repo</strong>（GitHub Card 只需要这个权限，你可以取消其他选"
+"项），生成令牌即可。"

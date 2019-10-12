@@ -26,7 +26,9 @@ Add [GitHub](https://github.com/) repository card into wordpress.
 
 - ShortCode
 
-`[ghCard owner="ineo6" name="mini-deploy"]`
+```
+[ghCard owner="ineo6" name="mini-deploy"]
+```
 
 - Widget
 
@@ -34,7 +36,9 @@ Go to wordpress admin panel to Appearance > Widget.
 
 - Call function
 
-`<?php wp_github_card_user(array( "user" => "ineo6" ))?>`
+```php
+<?php wp_github_card_user(array( "user" => "ineo6" ))?>
+```
 
 ## Installation
 

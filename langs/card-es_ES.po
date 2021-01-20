@@ -1,0 +1,120 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: card-for-github\n"
+"POT-Creation-Date: 2019-10-12 10:34+0800\n"
+"PO-Revision-Date: 2019-10-12 10:35+0800\n"
+"Last-Translator: Manuel Conde <manu_conde@hotmail.com>\n"
+"Language-Team: neo <idayer.com>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.7\n"
+"X-Poedit-KeywordsList: _e;__;esc_html_e\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: github-repo-widget.php:14
+msgid "GitHub Repo"
+msgstr "GitHub Repo"
+
+#: github-repo-widget.php:15
+msgid "GitHub Repo Card"
+msgstr "GitHub Repo Card"
+
+#: github-repo-widget.php:72 github-user-widget.php:72
+msgid "GitHub"
+msgstr "GitHub"
+
+#: github-repo-widget.php:80 github-user-widget.php:79
+msgid "Title:"
+msgstr "Título:"
+
+#: github-repo-widget.php:87 github-user-widget.php:86
+msgid "UserName:"
+msgstr "Usuario:"
+
+#: github-repo-widget.php:94
+msgid "Repository:"
+msgstr "Repositorio:"
+
+#: github-repo-widget.php:114
+msgid "Repository"
+msgstr "Repositorio"
+
+#: github-user-widget.php:14
+msgid "GitHub User"
+msgstr "Usuario GitHub"
+
+#: github-user-widget.php:15
+msgid "GitHub User Card"
+msgstr "Tarjeta de Usuario GitHub"
+
+#: github-user-widget.php:105
+msgid "User"
+msgstr "Usuario"
+
+#: wp-github-card.php:114
+msgid "This repository is not available anymore."
+msgstr "Este repositorio ya no está disponible."
+
+#: wp-github-card.php:130
+msgid "This repository doesn't have description or homepage."
+msgstr "Este repositorio no tiene descripción o página de inicio."
+
+#: wp-github-card.php:153
+msgid "Settings"
+msgstr "Ajustes"
+
+#: wp-github-card.php:160
+msgid "GitHub Card"
+msgstr "GitHub Card"
+
+#: wp-github-card.php:173
+msgid "GitHub Card options"
+msgstr "Opciones de GitHub Card"
+
+#: wp-github-card.php:177
+msgid "Get authenticated to GitHub API (HIGHLY RECOMMENDED!)"
+msgstr "Autentícate en GitHub API (¡MUY RECOMENDADO!)"
+
+#: wp-github-card.php:178
+msgid ""
+"For unauthenticated requests, the rate limit allows for up to <b>60</b> "
+"requests per hour. For authenticated requests, the rate limit is <b>5,000</"
+"b> times per hour. If your card works bad, it's possible that "
+"unauthenticated request quota is used up."
+msgstr ""
+"Para las solicitudes no autenticadas, el límite de consultas permite hasta <b>60</b> "
+"solicitudes por hora. Para solicitudes autenticadas, el límite de consultas es <b>5.000</"
+"b> solicitudes por hora. Si su tarjeta funciona mal es posible que "
+"la cuota de solicitudes no autenticadas se haya agotado."
+
+#: wp-github-card.php:182
+msgid "Personal Access Token"
+msgstr "Token de acceso personal"
+
+#: wp-github-card.php:189 wp-github-card.php:201
+msgid "Show"
+msgstr "Mostrar"
+
+#: wp-github-card.php:201
+msgid "Hide"
+msgstr "Ocultar"
+
+#: wp-github-card.php:209
+msgid "How do I get the personal access token?"
+msgstr "¿Cómo conseguir el token de acceso personal?"
+
+#: wp-github-card.php:210
+msgid ""
+"Visit <strong><a href=\"https://github.com/settings/tokens/new\" target="
+"\"_blank\">https://github.com/settings/tokens/new</a></strong>, make sure "
+"<strong>public_repo</strong> is checked (it is the only scope requested by "
+"GitHub Card, you may uncheck others) and generate a token."
+msgstr ""
+"Visita <strong><a href=\"https://github.com/settings/tokens/new\" target="
+"\"_blank\">https://github.com/settings/tokens/new</a></strong>, y marca la opción "
+"<strong>public_repo</strong> (es la única opción requerida por "
+"GitHub Card, puedes dejar el resto sin marcar) y genera el token."
